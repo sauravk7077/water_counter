@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-void initializeDB() async {
+Future<void> initializeDB() async {
   Directory appDir = await getApplicationDocumentsDirectory();
   Hive.init(appDir.path);
 }
