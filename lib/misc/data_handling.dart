@@ -15,10 +15,14 @@ Future<void> initializeDB() async {
   _box = await Hive.openBox("box");
 }
 
-Future<void> saveToBox(String boxName, Water value) async {
+Future<void> saveToBox(Water value) async {
   List<Water> obs = _box.get(formatTimeToString(DateTime.now()));
-  obs = [...obs, value];
-  await _box.put(DateTime.now(), obs);
+  obs = [if (obs != null) ...obs, value];
+  await _box.put(formatTimeToString(DateTime.now()), obs);
+}
+
+Future<void> clearBoxData() async {
+  await _box.deleteFromDisk();
 }
 
 ValueListenable<Box<List<Water>>> getBoxValueListeneable() {
